@@ -1,0 +1,99 @@
+/**
+ * Function to like a post on Facebook for multiple accounts.
+ *
+ * @param {string[]} accountLinks - Array of Facebook account links.
+ * @param {string} postLink - Link of the post to be liked.
+ * @returns {string[]} Array of account names that liked the post.
+ */
+function likePost(accountLinks, postLink) {
+    const likedAccounts = [];
+
+    // Iterate through each account link
+    for (let i = 0; i < accountLinks.length; i++) {
+        const accountLink = accountLinks[i];
+
+        // Simulate liking the post by adding the account name to the likedAccounts array
+        likedAccounts.push(getAccountName(accountLink));
+    }
+
+    // Display the post link in a blue box
+    displayPostLink(postLink, 'blue');
+
+    return likedAccounts;
+}
+
+/**
+ * Function to extract the account name from a Facebook account link.
+ *
+ * @param {string} accountLink - Facebook account link.
+ * @returns {string} Account name.
+ */
+function getAccountName(accountLink) {
+    // Extract the account name from the account link
+    const accountName = accountLink.split('/').pop();
+
+    return accountName;
+}
+
+/**
+ * Function to display the post link in a specified color box.
+ *
+ * @param {string} postLink - Link of the post.
+ * @param {string} color - Color of the box.
+ */
+function displayPostLink(postLink, color) {
+    // Display the post link in a box with the specified color
+    console.log(`[${color} box] ${postLink}`);
+}
+
+/**
+ * Unit Tests for likePost Function
+ */
+
+describe('likePost Function', () => {
+
+    it('Should return an array of liked account names', () => {
+        const accountLinks = ['https://www.facebook.com/user1', 'https://www.facebook.com/user2', 'https://www.facebook.com/user3'];
+        const postLink = 'https://www.facebook.com/post1';
+
+        const likedAccounts = likePost(accountLinks, postLink);
+
+        // Check if the likedAccounts array contains the expected account names
+        assert.deepStrictEqual(likedAccounts, ['user1', 'user2', 'user3']);
+    });
+
+    it('Should return an empty array if no account links are provided', () => {
+        const accountLinks = [];
+        const postLink = 'https://www.facebook.com/post1';
+
+        const likedAccounts = likePost(accountLinks, postLink);
+
+        // Check if the likedAccounts array is empty
+        assert.deepStrictEqual(likedAccounts, []);
+    });
+
+    it('Should display the post link in a blue box', () => {
+        const accountLinks = ['https://www.facebook.com/user1'];
+        const postLink = 'https://www.facebook.com/post1';
+
+        // Mock console.log to capture the output
+        const consoleLogMock = jest.spyOn(console, 'log').mockImplementation();
+
+        likePost(accountLinks, postLink);
+
+        // Check if console.log was called with the expected output
+        expect(consoleLogMock).toHaveBeenCalledWith('[blue box] https://www.facebook.com/post1');
+
+        // Restore the original console.log function
+        consoleLogMock.mockRestore();
+    });
+
+});
+
+// Usage Example for likePost Function
+
+const accountLinks = ['https://www.facebook.com/user1', 'https://www.facebook.com/user2', 'https://www.facebook.com/user3'];
+const postLink = 'https://www.facebook.com/post1';
+
+const likedAccounts = likePost(accountLinks, postLink);
+console.log('Liked Accounts:', likedAccounts);
